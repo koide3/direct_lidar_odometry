@@ -1,0 +1,8 @@
+<launch>
+    <arg name="bag_path" />
+    <arg name="dst_path" />
+
+    <include file="$(find direct_lidar_odometry)/launch/dlo_ncm.launch" />
+    <node pkg="rosbag" type="record" name="bag_recorder" args="-O $(arg dst_path) -e /robot/dlo/odom_node/(odom|pose).* /tf /tf_static" if="true"/>
+    <node pkg="rosbag" type="play" name="bag_player" args="--clock $(arg bag_path)" required="true"/>
+</launch>
